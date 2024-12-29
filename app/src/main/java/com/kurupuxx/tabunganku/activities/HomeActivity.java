@@ -19,18 +19,18 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.kurupuxx.tabunganku.R;
-import com.kurupuxx.tabunganku.helpers.DatabaseHelper;
+import com.kurupuxx.tabunganku.services.TransactionService;
 import com.kurupuxx.tabunganku.models.Transaction;
+import com.kurupuxx.tabunganku.adapters.TransactionAdapter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
 
     private ArrayList<String> categoryList;
-    private DatabaseHelper dbHelper;
+    private TransactionService dbHelper;
     private ListView listViewTransactions;
 
     @Override
@@ -44,16 +44,12 @@ public class HomeActivity extends AppCompatActivity {
         initializeData();
 
         findViewById(R.id.button).setOnClickListener(this::showPopupWindow);
-
-        // Menampilkan semua transaksi di awal
         displayTransactions();
     }
 
     private void initViews() {
-        dbHelper = DatabaseHelper.getInstance(this);
+        dbHelper = TransactionService.getInstance(this);
         listViewTransactions = findViewById(R.id.listViewTransactions);
-
-        dbHelper.getWritableDatabase();
     }
 
     private void setupWindowInsets() {
@@ -73,25 +69,20 @@ public class HomeActivity extends AppCompatActivity {
 
     private void showPopupWindow(View view) {
         View popupView = LayoutInflater.from(this).inflate(R.layout.popup_window, null);
-
         PopupWindow popupWindow = createPopupWindow(popupView);
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
         setupPopupContent(popupView, popupWindow);
     }
 
     private PopupWindow createPopupWindow(View popupView) {
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.85);
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-
-        boolean focusable = true;
-        return new PopupWindow(popupView, width, height, focusable);
+        return new PopupWindow(popupView, width, height, true);
     }
 
     private void setupPopupContent(View popupView, PopupWindow popupWindow) {
         Spinner spinnerCategory = popupView.findViewById(R.id.spinnerCategory);
         EditText amountInput = popupView.findViewById(R.id.amount_input);
-
         setupCategorySpinner(spinnerCategory);
 
         popupView.findViewById(R.id.button2).setOnClickListener(v -> handlePopupSubmit(spinnerCategory, amountInput, popupWindow));
@@ -107,14 +98,13 @@ public class HomeActivity extends AppCompatActivity {
         try {
             String selectedCategory = Objects.requireNonNull(spinnerCategory.getSelectedItem()).toString();
             int amount = parseAmount(amountInput);
-
-            Transaction newTransaction = new Transaction(0, selectedCategory, amount, String.valueOf(new Date().getTime()));
+            Transaction newTransaction = new Transaction(0, selectedCategory, amount, String.valueOf(System.currentTimeMillis()));
 
             long result = dbHelper.insertTransaction(newTransaction);
 
             if (result != -1) {
                 showToast("Berhasil menambahkan transaksi!");
-                displayTransactions(); // Refresh ListView setelah menambahkan transaksi baru
+                displayTransactions();
             } else {
                 throw new Exception("Gagal menambahkan transaksi!");
             }
@@ -137,16 +127,9 @@ public class HomeActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-    // Menampilkan semua transaksi di ListView
     private void displayTransactions() {
         List<Transaction> transactions = dbHelper.getAllTransactions();
-
-        ArrayList<String> transactionDetails = new ArrayList<>();
-        for (Transaction transaction : transactions) {
-            transactionDetails.add(transaction.getCategory() + " - Rp " + transaction.getAmount());
-        }
-
-        ArrayAdapter<String> transactionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, transactionDetails);
+        TransactionAdapter transactionAdapter = new TransactionAdapter(this, transactions);
         listViewTransactions.setAdapter(transactionAdapter);
     }
 }
