@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,7 +20,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.kurupuxx.tabunganku.R;
-import com.kurupuxx.tabunganku.services.TransactionService;
+import com.kurupuxx.tabunganku.repositories.TransactionRepository;
 import com.kurupuxx.tabunganku.models.Transaction;
 import com.kurupuxx.tabunganku.adapters.TransactionAdapter;
 
@@ -30,7 +31,7 @@ import java.util.Objects;
 public class HomeActivity extends AppCompatActivity {
 
     private ArrayList<String> categoryList;
-    private TransactionService dbHelper;
+    private TransactionRepository dbHelper;
     private ListView listViewTransactions;
 
     @Override
@@ -39,16 +40,15 @@ public class HomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
 
-        initViews();
+        initializeViews();
         setupWindowInsets();
-        initializeData();
-
-        findViewById(R.id.button).setOnClickListener(this::showPopupWindow);
+        initializeCategoryList();
+        setupAddTransactionButton();
         displayTransactions();
     }
 
-    private void initViews() {
-        dbHelper = TransactionService.getInstance(this);
+    private void initializeViews() {
+        dbHelper = TransactionRepository.getInstance(this);
         listViewTransactions = findViewById(R.id.listViewTransactions);
     }
 
@@ -60,11 +60,15 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void initializeData() {
+    private void initializeCategoryList() {
         categoryList = new ArrayList<>();
         categoryList.add("Tabungan");
         categoryList.add("Makanan");
         categoryList.add("Lain-lain");
+    }
+
+    private void setupAddTransactionButton() {
+        findViewById(R.id.button).setOnClickListener(this::showPopupWindow);
     }
 
     private void showPopupWindow(View view) {
@@ -131,5 +135,26 @@ public class HomeActivity extends AppCompatActivity {
         List<Transaction> transactions = dbHelper.getAllTransactions();
         TransactionAdapter transactionAdapter = new TransactionAdapter(this, transactions);
         listViewTransactions.setAdapter(transactionAdapter);
+
+        int totalPemasukan = 0;
+        int totalPengeluaran = 0;
+
+        for (Transaction transaction : transactions) {
+            if (transaction.getCategory().equalsIgnoreCase("tabungan")) {
+                totalPemasukan += transaction.getAmount();
+            } else {
+                totalPengeluaran += transaction.getAmount();
+            }
+        }
+
+        updateTransactionTotals(totalPemasukan, totalPengeluaran);
+    }
+
+    private void updateTransactionTotals(int totalPemasukan, int totalPengeluaran) {
+        TextView textTotalPemasukan = findViewById(R.id.totalPemasukan);
+        TextView textTotalPengeluaran = findViewById(R.id.totalPengeluaran);
+
+        textTotalPemasukan.setText(String.format("Rp. %d", totalPemasukan));
+        textTotalPengeluaran.setText(String.format("Rp. %d", totalPengeluaran));
     }
 }

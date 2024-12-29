@@ -1,4 +1,4 @@
-package com.kurupuxx.tabunganku.services;
+package com.kurupuxx.tabunganku.repositories;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,7 +11,7 @@ import com.kurupuxx.tabunganku.models.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransactionService extends SQLiteOpenHelper {
+public class TransactionRepository extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "TabunganKu.db";
     private static final int DATABASE_VERSION = 2;
 
@@ -21,16 +21,16 @@ public class TransactionService extends SQLiteOpenHelper {
     private static final String COLUMN_AMOUNT = "amount";
     private static final String COLUMN_CREATED_DATE = "created_date";
 
-    private static TransactionService instance;
+    private static TransactionRepository instance;
 
-    public static synchronized TransactionService getInstance(Context context) {
+    public static synchronized TransactionRepository getInstance(Context context) {
         if (instance == null) {
-            instance = new TransactionService(context.getApplicationContext());
+            instance = new TransactionRepository(context.getApplicationContext());
         }
         return instance;
     }
 
-    private TransactionService(Context context) {
+    private TransactionRepository(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

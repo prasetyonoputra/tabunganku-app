@@ -1,10 +1,10 @@
 package com.kurupuxx.tabunganku.models;
 
 public class Transaction {
-    private int id;
+    private final int id;
     private String category;
     private int amount;
-    private String createdDate;
+    private final String createdDate;
 
     public Transaction(int id, String category, int amount, String createdDate) {
         this.id = id;
