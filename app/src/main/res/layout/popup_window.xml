@@ -10,7 +10,6 @@
     android:gravity="center"
     tools:context=".activities.HomeActivity">
 
-    <!-- Title -->
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
@@ -22,7 +21,6 @@
         android:layout_marginBottom="24dp"
         android:gravity="center" />
 
-    <!-- Amount Input Field -->
     <EditText
         android:id="@+id/amount_input"
         android:layout_width="match_parent"
@@ -38,7 +36,6 @@
         android:importantForAccessibility="yes"
         android:contentDescription="Input amount" />
 
-    <!-- Category Label -->
     <TextView
         android:id="@+id/categoryLabel"
         android:layout_width="wrap_content"
@@ -50,7 +47,6 @@
         android:importantForAccessibility="yes"
         android:contentDescription="Category label" />
 
-    <!-- Category Spinner -->
     <Spinner
         android:id="@+id/spinnerCategory"
         android:layout_width="match_parent"
@@ -58,9 +54,11 @@
         android:padding="12dp"
         android:layout_marginBottom="24dp"
         android:importantForAccessibility="yes"
-        android:contentDescription="Select category" />
+        android:contentDescription="Select category"
+        android:background="@drawable/rounded_input_bg"
+        android:dropDownWidth="match_parent"
+        android:textColorHint="@color/darkGray" />
 
-    <!-- Save Button -->
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
