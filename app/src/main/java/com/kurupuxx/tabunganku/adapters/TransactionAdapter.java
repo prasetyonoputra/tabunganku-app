@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kurupuxx.tabunganku.R;
-import com.kurupuxx.tabunganku.services.TransactionService;
+import com.kurupuxx.tabunganku.repositories.TransactionRepository;
 import com.kurupuxx.tabunganku.models.Transaction;
 
 import java.util.List;
@@ -20,12 +20,12 @@ import java.util.List;
 public class TransactionAdapter extends BaseAdapter {
     private final Context context;
     private final List<Transaction> transactions;
-    private final TransactionService dbHelper;
+    private final TransactionRepository dbHelper;
 
     public TransactionAdapter(Context context, List<Transaction> transactions) {
         this.context = context;
         this.transactions = transactions;
-        this.dbHelper = TransactionService.getInstance(context);
+        this.dbHelper = TransactionRepository.getInstance(context);
     }
 
     @Override
@@ -65,7 +65,8 @@ public class TransactionAdapter extends BaseAdapter {
         }
 
         Transaction transaction = transactions.get(position);
-        viewHolder.transactionDetails.setText(transaction.getCategory() + " - Rp " + transaction.getAmount());
+        String transactionDetail = transaction.getCategory() + " - Rp " + transaction.getAmount();
+        viewHolder.transactionDetails.setText(transactionDetail);
 
         viewHolder.deleteButton.setOnClickListener(v -> deleteTransaction(transaction, position));
         viewHolder.updateButton.setOnClickListener(v -> showUpdatePopup(transaction));

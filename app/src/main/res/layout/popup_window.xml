@@ -10,7 +10,6 @@
     android:gravity="center"
     tools:context=".activities.HomeActivity">
 
-    <!-- Title -->
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
@@ -18,51 +17,61 @@
         android:text="Tambah Data"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginBottom="24dp" />
+        android:textColor="@color/black"
+        android:layout_marginBottom="24dp"
+        android:gravity="center" />
 
-    <!-- Amount Input Field -->
     <EditText
         android:id="@+id/amount_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:hint="Masukkan Jumlah"
-        android:padding="16dp"
-        android:textColor="#333333"
+        android:textColor="@color/black"
         android:textSize="16sp"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_input_bg"
-        android:layout_marginBottom="24dp" />
+        android:textColorHint="@color/darkGray"
+        android:importantForAccessibility="yes"
+        android:contentDescription="Input amount" />
 
-    <!-- Category Label -->
     <TextView
+        android:id="@+id/categoryLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pilih Kategori"
         android:textSize="16sp"
-        android:textColor="#333333"
-        android:layout_marginBottom="8dp" />
+        android:textColor="@color/black"
+        android:layout_marginBottom="8dp"
+        android:importantForAccessibility="yes"
+        android:contentDescription="Category label" />
 
-    <!-- Category Spinner -->
     <Spinner
         android:id="@+id/spinnerCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp"
-        android:layout_marginBottom="24dp" />
+        android:layout_marginBottom="24dp"
+        android:importantForAccessibility="yes"
+        android:contentDescription="Select category"
+        android:background="@drawable/rounded_input_bg"
+        android:dropDownWidth="match_parent"
+        android:textColorHint="@color/darkGray" />
 
-    <!-- Save Button -->
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Simpan"
         android:textSize="16sp"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="@color/colorAccent"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/black"
         android:padding="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="24dp"
-        app:cornerRadius="8dp" />
+        app:cornerRadius="8dp"
+        android:importantForAccessibility="yes"
+        android:contentDescription="Save button" />
 
 </LinearLayout>

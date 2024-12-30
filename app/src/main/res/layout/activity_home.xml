@@ -8,63 +8,87 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:gravity="center"
-    android:background="@color/white"
+    android:background="@color/black"
     tools:context=".activities.HomeActivity">
 
-    <!-- Section: Total Pengeluaran -->
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Total Pengeluaran: "
-        android:textSize="20sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="sans-serif-medium" />
+        android:orientation="vertical"
+        android:layout_marginBottom="32dp"
+        android:padding="16dp"
+        android:background="@color/darkGray"
+        android:gravity="center">
 
-    <!-- Section: Total Pemasukan -->
-    <TextView
-        android:id="@+id/textView2"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Pengeluaran"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/totalPengeluaran"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp. 0"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Pemasukan"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/totalPemasukan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp. 0"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-medium"/>
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Total Pemasukan: "
-        android:textSize="20sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="sans-serif-medium" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="16dp"
+        android:layout_marginBottom="24dp"
+        android:background="@color/lightGray">
 
-    <!-- Add Transaction Button (MaterialButton for modern look) -->
+        <ListView
+            android:id="@+id/listViewTransactions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="0.5dp"
+            android:padding="16dp" />
+    </androidx.cardview.widget.CardView>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Tambah Transaksi"
         android:textSize="16sp"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/colorAccent"
-        app:cornerRadius="8dp"
-        android:icon="@drawable/ic_add" />
-
-    <!-- ListView to display Transactions -->
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="8dp"
-        android:layout_marginBottom="16dp">
-
-        <ListView
-            android:id="@+id/listViewTransactions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@android:color/darker_gray"
-            android:dividerHeight="1dp"
-            android:padding="8dp" />
-    </androidx.cardview.widget.CardView>
-
+        android:textColor="@color/white"
+        android:backgroundTint="@color/darkGray"
+        app:cornerRadius="12dp"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        android:elevation="4dp"/>
 </LinearLayout>
